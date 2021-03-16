@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Rock - Paper - Scissors</h1>
+    </div>
+
+    <div class="container" id="game">
+        <h2>Welcome to your favorite game</h2>
+        <div class="gameArea">  
+            <div class="playerArea">      
+                <p>Choose your weapon !</p>
+                <button class="selection" data-choice="rock">Rock</button>
+                <button class="selection" data-choice="paper">Paper</button>
+                <button class="selection" data-choice="scissors">Scissors</button>
+            </div>
+        
+            <div class="computerArea">
+                <p>The computer choosed :</p>
+                <button id="computerChoice"></button>
+            </div>
+        </div>        
+    </div>
+
+    <div class="container" id="resultScore">
+        <div class="results">
+
+        </div>
+        <div class="score">
+            <p>Player : <span id="playerScore">0</span></p>
+            <p>computer : <span id="computerScore">0</span></p>
+        </div> 
+    </div>
+
+    
+</body>
+
+<script>
+
+    let selections = document.querySelectorAll(".selection");
+    selections.forEach(selection => {
+        selection.addEventListener('click', () => {
+            document.getElementById("computerChoice").textContent = "";
+            let playerSelection = selection.dataset.choice;
+            let computerSelection = computerPlay();
+            let winner = playRound(playerSelection, computerSelection);
+            console.log(winner);
+            document.getElementById("computerChoice").textContent = computerSelection;
+
+        })
+    });
+
+
+
+
+
+    let rock = "rock";
+    let paper = "paper";
+    let scissor = "scissors";
+    let choices = [rock, paper, scissor];
+
+    function computerPlay() {
+        let computerChoice = choices[Math.floor(Math.random() * 3)];
+        return computerChoice;
+    }
+
+    function playRound(playerSelection, computerSelection) {
+
+        let roundWinner = null;
+        switch (playerSelection) {
+            case rock:
+                if (computerSelection === rock) return roundWinner
+                else if (computerSelection === paper) {
+                    let roundWinner = "computer";
+                    return roundWinner
+                } else {
+                    let roundWinner = "player";
+                    return roundWinner
+                }
+                break;
+            case paper:
+                if (computerSelection === rock) {
+                    let roundWinner = "player";
+                    return roundWinner;
+                }
+                else if (computerSelection === paper) return roundWinner
+                else {
+                    let roundWinner = "computer";
+                    return roundWinner;
+                }
+                break;
+            case scissor:
+                if (computerSelection === rock) {
+                    let roundWinner = "computer";
+                    return roundWinner;
+                }
+                
+                else if (computerSelection === paper) {
+                    let roundWinner = "player";
+                    return roundWinner;
+                }
+                else return roundWinner
+                break;
+        }
+    }
+
+    function game() {
+        let computerScore = 0;
+        let playerScore = 0;
+        let playerChoice;
+        for (let i = 0; i < 5; i++) {
+
+            do {
+                let playerEntry = prompt();
+                playerChoice = playerEntry.toLowerCase().toString();
+            } while (!choices.includes(playerChoice));
+
+            let computerChoice = computerPlay();
+            let winner = playRound(playerChoice, computerChoice);
+            if (winner === "computer") {
+                ++computerScore
+                console.log(playerChoice);
+                console.log(computerChoice);
+                console.log(winner);
+                console.log(computerScore);
+                console.log(playerScore);
+                continue
+            } 
+            else if (winner === "player") {
+                ++playerScore
+                console.log(playerChoice);
+                console.log(computerChoice);
+                console.log(winner);
+                console.log(computerScore);
+                console.log(playerScore);
+                continue
+            } 
+            else {
+                console.log("null");
+                console.log(computerScore);
+                console.log(playerScore);
+            }
+        }
+    }
+
+</script>
+
+</html>
