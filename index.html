@@ -33,9 +33,6 @@
     </div>
 
     <div class="container" id="resultScore">
-        <div class="results">
-
-        </div>
         <div class="score">
             <p>Player : <span id="playerScore">0</span></p>
             <p>computer : <span id="computerScore">0</span></p>
@@ -47,21 +44,47 @@
 
 <script>
 
+    let computerScore = 0;
+    let playerScore = 0;
     let selections = document.querySelectorAll(".selection");
+
     selections.forEach(selection => {
+
         selection.addEventListener('click', () => {
+
             document.getElementById("computerChoice").textContent = "";
+            
             let playerSelection = selection.dataset.choice;
             let computerSelection = computerPlay();
             let winner = playRound(playerSelection, computerSelection);
-            console.log(winner);
+            let container = document.querySelector("#resultScore");
+
+            if (document.querySelector('.result')) {
+                container.removeChild(document.querySelector(".result"));
+            }
+
+            let result = document.createElement('h3');
+            result.classList.add("result");
+
+            switch (winner) {
+                case "computer": 
+                    result.textContent = "You Loosed";
+                    break
+                case "player":
+                    result.textContent = "You Won";
+                    break
+                default:
+                    result.textContent = "Play Again";
+            }
+
+            
+            let score = document.querySelector(".score");
+            container.insertBefore(result, score)
+
             document.getElementById("computerChoice").textContent = computerSelection;
 
         })
     });
-
-
-
 
 
     let rock = "rock";
