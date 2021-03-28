@@ -33,12 +33,6 @@
     </div>
 
     <div class="container" id="resultScore">
-<<<<<<< HEAD
-        <div class="results">
-
-        </div>
-=======
->>>>>>> 9d556bfa86a9200eec6573c8ffa729c1e35d7605
         <div class="score">
             <p>Player : <span id="playerScore">0</span></p>
             <p>computer : <span id="computerScore">0</span></p>
@@ -50,37 +44,63 @@
 
 <script>
 
-<<<<<<< HEAD
     let selections = document.querySelectorAll(".selection");
-    selections.forEach(selection => {
-        selection.addEventListener('click', () => {
-            document.getElementById("computerChoice").textContent = "";
-            let playerSelection = selection.dataset.choice;
-            let computerSelection = computerPlay();
-            let winner = playRound(playerSelection, computerSelection);
-            console.log(winner);
-            document.getElementById("computerChoice").textContent = computerSelection;
+    let playerScore = document.querySelector("#playerScore");
+    let computerScore = document.querySelector("#computerScore");
+    let computerChoice = document.getElementById("computerChoice");
+    let container = document.querySelector("#resultScore");
+    let score = document.querySelector(".score");
+    const refreshPage = () => {
+        window.location.reload();
+        return
+    }
 
+    function removeTransition (e) {
+        if(e.propertyName="transform") {
+          this.classList.remove("selected");
+        }
+      }
+
+    function endGame (gameWinner) {
+
+        selections.forEach(selection => {
+            selection.disabled = true;    
         })
-    });
 
+        document.getElementById("computerChoice").disabled = true;
 
+        let playAgain = document.createElement("button");
+        
+        playAgain.textContent = "Play Again";
+        playAgain.classList.add("playAgain");
 
-=======
-    let computerScore = 0;
-    let playerScore = 0;
-    let selections = document.querySelectorAll(".selection");
+        let winnerName = document.getElementsByClassName("result")[0];
+        winnerName.textContent = `The ${gameWinner} Is the Game Winner`
+
+        container.insertBefore(playAgain, winnerName);
+        playAgain.addEventListener('click', refreshPage);
+    }
+
+    computerChoice.addEventListener('transitionend', removeTransition);
+
 
     selections.forEach(selection => {
 
+        selection.addEventListener('transitionend', removeTransition)
+
         selection.addEventListener('click', () => {
 
-            document.getElementById("computerChoice").textContent = "";
             
+
             let playerSelection = selection.dataset.choice;
             let computerSelection = computerPlay();
             let winner = playRound(playerSelection, computerSelection);
-            let container = document.querySelector("#resultScore");
+
+            selection.classList.add("selected");
+            document.getElementById("computerChoice").textContent = "";
+            computerChoice.textContent = computerSelection;
+            document.getElementById("computerChoice").classList.add("selected");
+            
 
             if (document.querySelector('.result')) {
                 container.removeChild(document.querySelector(".result"));
@@ -92,23 +112,28 @@
             switch (winner) {
                 case "computer": 
                     result.textContent = "You Loosed";
+                    computerScore.textContent = parseInt(computerScore.innerHTML, 10) + 1;
                     break
                 case "player":
                     result.textContent = "You Won";
+                    playerScore.textContent = parseInt(playerScore.innerHTML, 10) + 1;
                     break
                 default:
-                    result.textContent = "Play Again";
+                    result.textContent = "Draw !! Play Again";
             }
-
-            
-            let score = document.querySelector(".score");
+      
             container.insertBefore(result, score)
 
-            document.getElementById("computerChoice").textContent = computerSelection;
 
+
+            if (parseInt(computerScore.innerHTML, 10) === 5) {
+                endGame("Computer")
+            } 
+            else if(parseInt(playerScore.innerHTML, 10) === 5) {
+                endGame("Player")
+            }
         })
     });
->>>>>>> 9d556bfa86a9200eec6573c8ffa729c1e35d7605
 
 
     let rock = "rock";
@@ -158,45 +183,6 @@
                 }
                 else return roundWinner
                 break;
-        }
-    }
-
-    function game() {
-        let computerScore = 0;
-        let playerScore = 0;
-        let playerChoice;
-        for (let i = 0; i < 5; i++) {
-
-            do {
-                let playerEntry = prompt();
-                playerChoice = playerEntry.toLowerCase().toString();
-            } while (!choices.includes(playerChoice));
-
-            let computerChoice = computerPlay();
-            let winner = playRound(playerChoice, computerChoice);
-            if (winner === "computer") {
-                ++computerScore
-                console.log(playerChoice);
-                console.log(computerChoice);
-                console.log(winner);
-                console.log(computerScore);
-                console.log(playerScore);
-                continue
-            } 
-            else if (winner === "player") {
-                ++playerScore
-                console.log(playerChoice);
-                console.log(computerChoice);
-                console.log(winner);
-                console.log(computerScore);
-                console.log(playerScore);
-                continue
-            } 
-            else {
-                console.log("null");
-                console.log(computerScore);
-                console.log(playerScore);
-            }
         }
     }
 

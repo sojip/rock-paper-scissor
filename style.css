@@ -34,12 +34,13 @@ body {
 #game {
     background-color: #D9AFD9;
     background-image: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%);
-
+    position: relative;  
 }
 
 .gameArea {
     display: flex;
     justify-content: space-between;
+
 }
 
 h2 {
@@ -47,6 +48,11 @@ h2 {
     padding: 25px 0;
     font-size:25px;
     font-style: italic;
+}
+
+button {
+    font-family:'Redressed', cursive;
+    font-size: 15px;
 }
 
 .playerArea {
@@ -63,11 +69,16 @@ h2 {
     padding: 25px;
 }
 
-.selection , #computerChoice {
+.selection , #computerChoice, .playAgain{
     width: 100px;
     height: 50px;
     margin: 5px;
     box-shadow: 0 8px 6px -6px black;
+    transition: all 1s ease;
+}
+
+.selected {
+    transform: scale(1.1);
 }
 
 .computerArea {
@@ -79,6 +90,10 @@ h2 {
     padding: 15px;
 }
 
+.result {
+    text-align: center;
+}
+
 #resultScore {
     min-height: 200px;
     background-color: #F4D03F;
@@ -86,10 +101,7 @@ h2 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-<<<<<<< HEAD
-=======
     text-align: center;
->>>>>>> 9d556bfa86a9200eec6573c8ffa729c1e35d7605
 }
 
 .score {
@@ -106,6 +118,11 @@ h2 {
     margin: 15px;
     text-align: center;
     padding: 15px;
+}
+
+.playAgain {
+    margin: 10px auto;
+
 }
 
 
